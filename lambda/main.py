@@ -6,11 +6,12 @@ def handler(event, context):
 
     path = event["rawPath"]
     if path != "/":
-        return {"statuscode": 404, "body": "Not found."}
+        return {"statusCode": 404, "body": "Not found."}
+
     dynamodb = boto3.resource("dynamodb")
     table = dynamodb.Table(os.environ.get("TABLE_NAME"))
 
-    response = table.get_item(key={"key": "visit_count"})
+    response = table.get_item(Key={"key": "visit_count"})
     if "Item" in response:
         visit_count = response["Item"]["value"]
     else:
